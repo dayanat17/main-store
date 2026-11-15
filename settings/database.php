@@ -1,29 +1,20 @@
 <?php
-    //Database connection
-/*
-To test connection, please go to:
-http://localhost/main-store/settings/database.php
-*/
+    // Database connection
+    /*
+    To test connection, please go to:
+    http://localhost/main-store/settings/database.php
+    */
     
-//Local connection
+    // Local connection (Usando MySQLi para XAMPP)
     $local_host = "localhost";
-    $local_port = "5432";
+    $local_user = "root";       // Usuario por defecto en XAMPP
+    $local_password = "";       // Contraseña por defecto en XAMPP (usualmente vacía)
     $local_dbname = "mainstore";
-    $local_user = "postgres";
-    $local_password = "postgres";
- 
-    $local_conn = pg_connect(
-        "
-        host=$local_host
-        port=$local_port
-        dbname=$local_dbname
-        user=$local_user
-        password=$local_password
-    "
-    );
- 
+    // Nota: XAMPP usa normalmente el puerto 3306 por defecto para MySQL
 
-//Supa connection
+    $local_conn = mysqli_connect($local_host, $local_user, $local_password, $local_dbname);
+
+    // Supa connection (Mantiene pg_connect porque Supabase es PostgreSQL)
     $supa_host = "aws-1-us-west-2.pooler.supabase.com";
     $supa_port = "6543";
     $supa_dbname = "postgres";
@@ -38,13 +29,15 @@ http://localhost/main-store/settings/database.php
         password=$supa_password
     ");
 
-    if (!$supa_conn) {
-        die("Error local connection");
+    // Validaciones de conexión
+    if (!$local_conn) {
+        die("Error local connection: " . mysqli_connect_error());
     } else {
         echo "Success database local connection !!!";
     }
-    if (!$local_conn) {
-        die("Error supa connection");
+
+    if (!$supa_conn) {
+        die("<br>Error supa connection");
     } else {
         echo "<br>Success database supa connection !!!";
     }
