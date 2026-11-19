@@ -1,44 +1,42 @@
 <?php
-    // Database connection
-    /*
-    To test connection, please go to:
-    http://localhost/main-store/settings/database.php
-    */
-    
-    // Local connection (Usando MySQLi para XAMPP)
-    $local_host = "localhost";
-    $local_user = "root";       // Usuario por defecto en XAMPP
-    $local_password = "";       // Contraseña por defecto en XAMPP (usualmente vacía)
-    $local_dbname = "mainstore";
-    // Nota: XAMPP usa normalmente el puerto 3306 por defecto para MySQL
-
-    $local_conn = mysqli_connect($local_host, $local_user, $local_password, $local_dbname);
-
-    // Supa connection (Mantiene pg_connect porque Supabase es PostgreSQL)
-    $supa_host = "aws-1-us-west-2.pooler.supabase.com";
-    $supa_port = "6543";
-    $supa_dbname = "postgres";
-    $supa_user = "postgres.bjoqnpszpqgxxgficomw";
-    $supa_password = "main-store@@";
- 
-    $supa_conn = pg_connect("
-        host=$supa_host
-        port=$supa_port
-        dbname=$supa_dbname
-        user=$supa_user
-        password=$supa_password
-    ");
-
-    // Validaciones de conexión
-    if (!$local_conn) {
-        die("Error local connection: " . mysqli_connect_error());
-    } else {
-        echo "Success database local connection !!!";
-    }
-
-    if (!$supa_conn) {
-        die("<br>Error supa connection");
-    } else {
-        echo "<br>Success database supa connection !!!";
-    }
+/*
+To test connection, please use the following request:
+http://localhost/main_store/settings/database.php
+*/
+$local_host = "localhost";
+$local_port = "5432";
+$local_dbname = "main_store";
+$local_user = "postgres";
+$local_password = "postgres";
+$local_conn = pg_connect("
+host=$local_host
+port=$local_port
+dbname=$local_dbname
+user=$local_user
+password=$local_password"
+);
+//supa connection
+$supa_host = "aws-0-us-east-1.pooler.supabase.com";
+$supa_port = "6543";
+$supa_dbname = "postgres";
+$supa_user = "postgres.osocaniwlkaehptlcond";
+$supa_password = "main-store@@";
+$supa_conn = pg_connect("
+host=$supa_host
+port=$supa_port
+dbname=$supa_dbname
+user=$supa_user
+password=$supa_password"
+);
+if (!$local_conn) {
+die("Error local connection");
+} else {
+//echo "Success database local connection !!!";
+//echo "Success database connection !!!<br>";
+}
+if (!$supa_conn) {
+die("Error supa connection");
+} else {
+//echo "Success database supa connection !!!";
+}
 ?>
